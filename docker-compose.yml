@@ -4,6 +4,8 @@ services:
     ports:
       - "8049:80"
     restart: unless-stopped
+    networks:
+      - agrovale_net
 
   db:
     image: mariadb:11.4
@@ -15,6 +17,8 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     restart: unless-stopped
+    networks:
+      - agrovale_net
 
   blog:
     image: wordpress:6-apache
@@ -28,6 +32,12 @@ services:
     depends_on:
       - db
     restart: unless-stopped
+    networks:
+      - agrovale_net
 
 volumes:
   db_data:
+
+networks:
+  agrovale_net:
+    driver: bridge
